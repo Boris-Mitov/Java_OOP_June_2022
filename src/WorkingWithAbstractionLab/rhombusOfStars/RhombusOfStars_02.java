@@ -10,6 +10,7 @@ public class RhombusOfStars_02 {
 
         printRhombus(n);
 
+
     }
 
     private static void printRhombus(int rhombusSize) {
