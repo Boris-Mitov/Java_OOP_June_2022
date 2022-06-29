@@ -3,6 +3,7 @@ package WorkingWithAbstractionLab.pointInRectangle;
 public class Rectangle {
     private Point A;
     private Point C;
+    //todo
 
     public Rectangle(Point A, Point C) {
         this.A = A;
