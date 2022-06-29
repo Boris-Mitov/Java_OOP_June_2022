@@ -24,7 +24,6 @@ public class Main {
             // Pa(x1,y1), Pb(x2, y2), Px(x3, y3)
             // For Px to be inside the following should be true:
             // x3 >= x1 && y3 >= y1 && x3 <= x2 & y3 <= y2
-            //todo
 
 
             boolean isInside = rect.contains(x);

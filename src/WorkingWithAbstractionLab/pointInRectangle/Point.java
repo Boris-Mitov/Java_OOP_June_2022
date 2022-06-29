@@ -9,8 +9,6 @@ public class Point {
         this.y = y;
     }
 
-    //todo
-
     public boolean greaterOrEqual(Point other) {
         return x >= other.x && y >= other.y;
     }
