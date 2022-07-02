@@ -1,6 +1,6 @@
 package WorkingWithAbstractionExercise.CardRank;
 
-public enum CardsSuits {
+public enum CardsRanks {
     ACE,
     TWO,
     THREE,
