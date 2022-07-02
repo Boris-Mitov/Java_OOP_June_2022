@@ -7,59 +7,75 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-            int[] dimestions = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-            int x = dimestions[0];
-            int y = dimestions[1];
+        int[] dimensions = getRowsCols(scanner.nextLine());
 
-            int[][] matrix = new int[x][y];
+        int rows = dimensions[0];
+        int cols = dimensions[1];
 
-            int value = 0;
-            for (int i = 0; i < x; i++)
-            {
-                for (int j = 0; j < y; j++)
-                {
-                    matrix[i][j] = value++;
-                }
+        int[][] galaxy = new int[rows][cols];
+
+        fillGalaxy(rows, cols, galaxy);
+
+        String command = scanner.nextLine();
+        long peterCollectedStars = 0;
+        while (!command.equals("Let the Force be with you")) {
+            int[] peterCoordinates = getRowsCols(command);
+            int[] evilCoordinates = getRowsCols(scanner.nextLine());
+
+            int evilRow = evilCoordinates[0];
+            int evilCol = evilCoordinates[1];
+
+            evilDestroyStars(galaxy, evilRow, evilCol);
+
+            int peterRow = peterCoordinates[0];
+            int peterCol = peterCoordinates[1];
+
+            peterCollectedStars = starsSumming(galaxy, peterCollectedStars, peterRow, peterCol);
+
+            command = scanner.nextLine();
+        }
+
+        System.out.println(peterCollectedStars);
+    }
+
+    private static int[] getRowsCols(String scanner) {
+        return Arrays.stream(scanner.split("\\s+"))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+    }
+
+    private static void fillGalaxy(int rows, int cols, int[][] galaxy) {
+        int galaxyFillerValue = 0;
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                galaxy[row][col] = galaxyFillerValue;
+                galaxyFillerValue++;
             }
+        }
+    }
 
-            String command = scanner.nextLine();
-            long sum = 0;
-            while (!command.equals("Let the Force be with you"))
-            {
-                int[] ivoS = Arrays.stream(command.split(" ")).mapToInt(Integer::parseInt).toArray();
-                int[] evil = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-                int xE = evil[0];
-                int yE = evil[1];
-
-                while (xE >= 0 && yE >= 0)
-                {
-                    if (xE >= 0 && xE < matrix.length && yE >= 0 && yE < matrix[0].length)
-                    {
-                        matrix[xE] [yE] = 0;
-                    }
-                    xE--;
-                    yE--;
-                }
-
-                int xI = ivoS[0];
-                int yI = ivoS[1];
-
-                while (xI >= 0 && yI < matrix[1].length)
-                {
-                    if (xI >= 0 && xI < matrix.length && yI >= 0 && yI < matrix[0].length)
-                    {
-                        sum += matrix[xI][yI];
-                    }
-
-                    yI++;
-                    xI--;
-                }
-
-                command = scanner.nextLine();
+    private static long starsSumming(int[][] galaxy, long sum, int peterRow, int peterCol) {
+        while (peterRow >= 0 && peterCol < galaxy[1].length) {
+            if (isInBounds(galaxy, peterRow, peterCol)) {
+                sum += galaxy[peterRow][peterCol];
             }
+            peterRow--;
+            peterCol++;
+        }
+        return sum;
+    }
 
-        System.out.println(sum);
+    private static void evilDestroyStars(int[][] galaxy, int evilRow, int evilCol) {
+        while (evilRow >= 0 && evilCol >= 0) {
+            if (isInBounds(galaxy, evilRow, evilCol)) {
+                galaxy[evilRow][evilCol] = 0;
+            }
+            evilRow--;
+            evilCol--;
+        }
+    }
 
-
+    private static boolean isInBounds(int[][] galaxy, int row, int col) {
+        return row >= 0 && col >= 0 && row < galaxy.length && col < galaxy[row].length;
     }
 }
