@@ -1,4 +1,4 @@
-package WorkingWithAbstractionLab.StudentSystem;
+package WorkingWithAbstraction.StudentSystem;
 
 public class Student {
     private String name;

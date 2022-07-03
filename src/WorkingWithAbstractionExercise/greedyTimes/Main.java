@@ -7,90 +7,102 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
-        long vhod = Long.parseLong(scanner.nextLine());
-        String[] seif = scanner.nextLine().split("\\s+");
 
-        var torba = new LinkedHashMap<String, LinkedHashMap<String, Long>>();
-        long zlato = 0;
-        long kamuni = 0;
-        long mangizi = 0;
+        long bagCapacity = Long.parseLong(scanner.nextLine());
+        String[] vault = scanner.nextLine().split("\\s+");
 
-        for (int i = 0; i < seif.length; i += 2) {
-            String name = seif[i];
-            long broika = Long.parseLong(seif[i + 1]);
+        Map<String, LinkedHashMap<String, Long>> bag = new LinkedHashMap<>();
+        long gold = 0;
+        long gems = 0;
+        long cash = 0;
 
-            String kvoE = "";
+        for (int i = 0; i < vault.length; i += 2) {
+            String name = vault[i];
+            long count = Long.parseLong(vault[i + 1]);
+
+            String itemType = "";
 
             if (name.length() == 3) {
-                kvoE = "Cash";
+                itemType = "Cash";
             } else if (name.toLowerCase().endsWith("gem")) {
-                kvoE = "Gem";
-            } else if (name.toLowerCase().equals("gold")) {
-                kvoE = "Gold";
+                itemType = "Gem";
+            } else if (name.equalsIgnoreCase("gold")) {
+                itemType = "Gold";
             }
 
-            if (kvoE.equals("")) {
+            if (itemType.equals("")) {
                 continue;
-            } else if (vhod < torba.values().stream().map(Map::values).flatMap(Collection::stream).mapToLong(e -> e).sum() + broika) {
+            } else if (bagCapacity < bag.values().stream()
+                    .map(Map::values)
+                    .flatMap(Collection::stream)
+                    .mapToLong(e -> e).sum() + count) {
                 continue;
             }
 
-            switch (kvoE) {
+            switch (itemType) {
                 case "Gem":
-                    if (!torba.containsKey(kvoE)) {
-                        if (torba.containsKey("Gold")) {
-                            if (broika > torba.get("Gold").values().stream().mapToLong(e -> e).sum()) {
+                    if (!bag.containsKey(itemType)) {
+                        if (bag.containsKey("Gold")) {
+                            if (count > bag.get("Gold").values().stream()
+                                    .mapToLong(e -> e).sum()) {
                                 continue;
                             }
                         } else {
                             continue;
                         }
-                    } else if (torba.get(kvoE).values().stream().mapToLong(e -> e).sum() + broika > torba.get("Gold").values().stream().mapToLong(e -> e).sum()) {
+                    } else if (bag.get(itemType).values().stream()
+                            .mapToLong(e -> e)
+                            .sum() + count > bag.get("Gold").values().stream().mapToLong(e -> e).sum()) {
                         continue;
                     }
                     break;
                 case "Cash":
-                    if (!torba.containsKey(kvoE)) {
-                        if (torba.containsKey("Gem")) {
-                            if (broika > torba.get("Gold").values().stream().mapToLong(e -> e).sum()) {
+                    if (!bag.containsKey(itemType)) {
+                        if (bag.containsKey("Gem")) {
+                            if (count > bag.get("Gold").values().stream()
+                                    .mapToLong(e -> e).sum()) {
                                 continue;
                             }
                         } else {
                             continue;
                         }
-                    } else if (torba.get(kvoE).values().stream().mapToLong(e -> e).sum() + broika > torba.get("Gem").values().stream().mapToLong(e -> e).sum()) {
+                    } else if (bag.get(itemType).values().stream()
+                            .mapToLong(e -> e)
+                            .sum() + count > bag.get("Gem").values().stream().mapToLong(e -> e).sum()) {
                         continue;
                     }
                     break;
             }
 
-            if (!torba.containsKey(kvoE)) {
-                torba.put((kvoE), new LinkedHashMap<String, Long>());
+            if (!bag.containsKey(itemType)) {
+                bag.put((itemType), new LinkedHashMap<>());
             }
 
-            if (!torba.get(kvoE).containsKey(name)) {
-                torba.get(kvoE).put(name, 0L);
+            if (!bag.get(itemType).containsKey(name)) {
+                bag.get(itemType).put(name, 0L);
             }
 
 
-            torba.get(kvoE).put(name, torba.get(kvoE).get(name) + broika);
-            if (kvoE.equals("Gold")) {
-                zlato += broika;
-            } else if (kvoE.equals("Gem")) {
-                kamuni += broika;
-            } else if (kvoE.equals("Cash")) {
-                mangizi += broika;
+            bag.get(itemType).put(name, bag.get(itemType).get(name) + count);
+            if (itemType.equals("Gold")) {
+                gold += count;
+            } else if (itemType.equals("Gem")) {
+                gems += count;
+            } else if (itemType.equals("Cash")) {
+                cash += count;
             }
         }
 
-        for (var x : torba.entrySet()) {
-            Long sumValues = x.getValue().values().stream().mapToLong(l -> l).sum();
+        for (Map.Entry<String, LinkedHashMap<String, Long>> b : bag.entrySet()) {
+            Long sumValues = b.getValue().values().stream()
+                    .mapToLong(l -> l).sum();
 
-            System.out.println(String.format("<%s> $%s", x.getKey(), sumValues));
+            System.out.printf("<%s> $%s%n", b.getKey(), sumValues);
 
-            x.getValue().entrySet().stream().sorted((e1, e2) -> e2.getKey().compareTo(e1.getKey())).forEach(i -> System.out.println("##" + i.getKey() + " - " + i.getValue()));
+            b.getValue().entrySet().stream()
+                    .sorted((e1, e2) -> e2.getKey().compareTo(e1.getKey()))
+                    .forEach(i -> System.out.println("##" + i.getKey() + " - " + i.getValue()));
 
         }
     }

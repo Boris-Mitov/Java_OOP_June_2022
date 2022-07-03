@@ -1,6 +1,4 @@
-package WorkingWithAbstractionLab.HotelReservation;
-
-import java.util.Locale;
+package WorkingWithAbstraction.HotelReservation;
 
 public enum Season {
     AUTUMN(1),

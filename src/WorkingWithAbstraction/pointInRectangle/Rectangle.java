@@ -1,4 +1,4 @@
-package WorkingWithAbstractionLab.pointInRectangle;
+package WorkingWithAbstraction.pointInRectangle;
 
 public class Rectangle {
     private Point A;

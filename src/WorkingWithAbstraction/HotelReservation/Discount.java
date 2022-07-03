@@ -1,4 +1,4 @@
-package WorkingWithAbstractionLab.HotelReservation;
+package WorkingWithAbstraction.HotelReservation;
 
 public enum Discount {
     VIP(0.80),

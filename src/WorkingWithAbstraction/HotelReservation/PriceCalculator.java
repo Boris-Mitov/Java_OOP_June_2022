@@ -1,4 +1,4 @@
-package WorkingWithAbstractionLab.HotelReservation;
+package WorkingWithAbstraction.HotelReservation;
 
 public class PriceCalculator {
     private double pricePerDay;
