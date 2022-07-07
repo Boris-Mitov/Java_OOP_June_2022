@@ -8,11 +8,15 @@ public class Person {
     private int age;
     private double salary;
 
-    public Person(String firstName, String lastName, int age, double salary) {
+    public Person(String firstName, String lastName, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.salary = salary;
+    }
+
+    public Person(String firstName, String lastName, int age, double salary) {
+        this(firstName, lastName, age);
+        this.setSalary(salary);
     }
 
     public double getSalary() {
