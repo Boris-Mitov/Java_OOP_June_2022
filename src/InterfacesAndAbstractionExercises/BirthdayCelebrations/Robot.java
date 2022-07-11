@@ -1,7 +1,5 @@
 package InterfacesAndAbstractionExercises.BirthdayCelebrations;
 
-import InterfacesAndAbstractionExercises.MultipleImplementation.Identifiable;
-
 public class Robot implements Identifiable {
     private String id;
     private String model;

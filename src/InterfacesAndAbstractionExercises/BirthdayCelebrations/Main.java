@@ -37,11 +37,10 @@ public class Main {
             input = scanner.nextLine();
         }
         String yearToCheck = scanner.nextLine();
-        for (Birthable citizen : thingsWithBirthday) {
-            if(citizen.getBirthDate().endsWith(yearToCheck)) {
-                System.out.println(citizen.getBirthDate());
-            }
-        }
 
+        thingsWithBirthday
+                .stream()
+                .filter(birthable -> birthable.getBirthDate().endsWith(yearToCheck))
+                .forEach(birthable -> System.out.println(birthable.getBirthDate()));
     }
 }
