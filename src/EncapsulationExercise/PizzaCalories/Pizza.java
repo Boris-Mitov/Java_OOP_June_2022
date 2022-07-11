@@ -1,29 +1,45 @@
 package EncapsulationExercise.PizzaCalories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pizza {
     private String name;
-    private Dough dought;
+    private Dough dough;
     private List<Topping> toppings;
 
-    public Pizza(String name, Dough dought, List<Topping> toppings) {
-        this.setName(name);
-        this.dought = dought;
-        ;
+    public Pizza(String name, int countOfToppings) {
+        setName(name);
+        setToppings(countOfToppings);
     }
 
     private void setName(String name) {
+        if (name.trim().isEmpty() || name.length() > 15 || name.length() < 1) {
+            throw new IllegalArgumentException("Pizza name should be between 1 and 15 symbols.");
+        }
         this.name = name;
     }
 
-    public void setDought(Dough dought) {
-        this.dought = dought;
+    public void addTopping(Topping topping) {
+        toppings.add(topping);
     }
 
-    private void setToppings(List<Topping> toppings) {
-        this.toppings = toppings;
+    private void setToppings(int countOfToppings) {
+        if (countOfToppings < 0 || countOfToppings > 10) {
+            throw new IllegalArgumentException("Number of toppings should be in range [0..10].");
+        }
+        this.toppings = new ArrayList<>();
     }
 
+    public void setDough(Dough dough) {
+        this.dough = dough;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public double getOverallCalories() {
+        return dough.calculateCalories() + toppings.stream().mapToDouble(topping -> topping.calculateCalories()).sum();
+    }
 }
