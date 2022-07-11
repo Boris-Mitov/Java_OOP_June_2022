@@ -18,7 +18,7 @@ public class Topping {
                 this.toppingType = toppingType;
                 break;
             default:
-                String exceptionMessage = String.format("Cannot place %s on top of your pizza.", this.toppingType);
+                String exceptionMessage = String.format("Cannot place %s on top of your pizza.", toppingType);
                 throw new IllegalArgumentException(exceptionMessage);
         }
     }
@@ -29,5 +29,23 @@ public class Topping {
             throw new IllegalArgumentException(exceptionMessage);
         }
         this.weight = weight;
+    }
+
+    public double calculateCalories () {
+        return 2 * weight * getToppingModifier();
+    }
+
+    private double getToppingModifier() {
+        switch (toppingType) {
+            case "Meat":
+                return 1.2;
+            case "Veggies":
+                return 0.8;
+            case "Cheese":
+                return 1.1;
+            case "Sauce":
+                return 0.9;
+        }
+        return 0;
     }
 }

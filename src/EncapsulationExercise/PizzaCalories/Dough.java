@@ -11,24 +11,52 @@ public class Dough {
         setWeight(weight);
     }
 
-    public void setFlourType(String flourType) {
+    private void setFlourType(String flourType) {
         if (!"White".equals(flourType) && !"Wholegrain".equals(flourType)) {
             throw new IllegalArgumentException("Invalid type of dough.");
         }
         this.flourType = flourType;
     }
 
-    public void setBakingTechnique(String bakingTechnique) {
-        if (!"Crispy".equals(bakingTechnique) && !"Chewy".equals(bakingTechnique) && !"Homemade".equals(bakingTechnique)) {
+    private void setBakingTechnique(String bakingTechnique) {
+        if (!"Crispy".equals(bakingTechnique)
+                && !"Chewy".equals(bakingTechnique)
+                && !"Homemade".equals(bakingTechnique)) {
             throw new IllegalArgumentException("Invalid type of dough.");
         }
         this.bakingTechnique = bakingTechnique;
     }
 
-    public void setWeight(double weight) {
+    private void setWeight(double weight) {
         if (weight < 1 || weight > 200) {
             throw new IllegalArgumentException("Dough weight should be in the range [1..200].");
         }
         this.weight = weight;
+    }
+
+    public double calculateCalories () {
+        return 2 * weight * getBackingTechniqueModifier() * getFlourModifier();
+    }
+
+    private double getBackingTechniqueModifier() {
+        switch (bakingTechnique) {
+            case "Crispy":
+                return 0.9;
+            case "Chewy":
+                return 1.1;
+            case "Homemade":
+                return 1.0;
+        }
+        return 0;
+    }
+
+    private double getFlourModifier() {
+        switch (flourType) {
+            case "White":
+                return 1.5;
+            case "Wholegrain":
+                return 1.0;
+        }
+        return 0;
     }
 }
