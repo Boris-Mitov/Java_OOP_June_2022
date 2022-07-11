@@ -21,13 +21,13 @@ public class Main {
                     int age = Integer.parseInt(inputParts[2]);
                     String id = inputParts[3];
                     String citizenBirthDate = inputParts[4];
-                    Citizen citizen = new Citizen(citizenName, age, id, citizenBirthDate);
+                    Birthable citizen = new Citizen(citizenName, age, id, citizenBirthDate);
                     thingsWithBirthday.add(citizen);
                     break;
                 case "Pet":
                     String petName = inputParts[1];
                     String birthDate = inputParts[2];
-                    Pet pet = new Pet(petName, birthDate);
+                    Birthable pet = new Pet(petName, birthDate);
                     thingsWithBirthday.add(pet);
                     break;
                 case "Robot":
