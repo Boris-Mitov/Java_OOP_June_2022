@@ -1,31 +1,48 @@
 package PolymorphismExercise.Vehicles;
 
-public abstract class Vehicle {
-    private int fuelQuantity;
-    private double fuelConsumptionPerKm;
+import java.text.DecimalFormat;
 
-    public Vehicle(int fuelQuantity, double fuelConsumptionPerKm) {
+public class Vehicle {
+    private double fuelQuantity;
+    private double fuelConsumption;
+
+    public Vehicle(double fuelQuantity, double fuelConsumptionPerKm) {
         setFuelQuantity(fuelQuantity);
-        setFuelConsumptionPerKm(fuelConsumptionPerKm);
+        setFuelConsumption(fuelConsumptionPerKm);
     }
 
-    public void setFuelQuantity(int fuelQuantity) {
+    public String drive(double distance) {
+        double fuelNeeded = distance * fuelConsumption;
+        if (fuelNeeded > this.fuelQuantity) {
+            return String.format("%s needs refueling", this.getClass().getSimpleName());
+        }
+        this.fuelQuantity -= fuelNeeded;
+        DecimalFormat decimalFormat = new DecimalFormat("##.##");
+        return String.format("%s travelled %s km", this.getClass().getSimpleName(), decimalFormat.format(distance));
+    }
+
+    public void refuel(double liters) {
+        this.fuelQuantity += liters;
+    }
+
+    public void setFuelQuantity(double fuelQuantity) {
         this.fuelQuantity = fuelQuantity;
     }
 
-    public void setFuelConsumptionPerKm(double fuelConsumptionPerKm) {
-        this.fuelConsumptionPerKm = fuelConsumptionPerKm;
+    public void setFuelConsumption(double fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
     }
 
-    public int getFuelQuantity() {
+    public double getFuelQuantity() {
         return fuelQuantity;
     }
 
-    public double getFuelConsumptionPerKm() {
-        return fuelConsumptionPerKm;
+    public double getFuelConsumption() {
+        return fuelConsumption;
     }
 
-    public abstract String driving();
-
-    public abstract double refueling(int litersToRefuel);
+    @Override
+    public String toString() {
+        return String.format("%s: %.2f", this.getClass().getSimpleName(), getFuelQuantity());
+    }
 }

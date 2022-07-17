@@ -1,20 +1,16 @@
 package PolymorphismExercise.Vehicles;
 
-public class Truck extends Vehicle{
+public class Truck extends Vehicle {
+    private final static double ADDITIONAL_AC_CONSUMPTION = 1.6;
+    private final static double TANK_LEAKAGE_MULTIPLIER = 0.95;
 
-
-    public Truck(int fuelQuantity, double fuelConsumptionPerKm) {
-        super(fuelQuantity, fuelConsumptionPerKm + 1.6);
+    public Truck(double fuelQuantity, double fuelConsumption) {
+        super(fuelQuantity, fuelConsumption + ADDITIONAL_AC_CONSUMPTION);
     }
 
     @Override
-    public String driving() {
-        //TODO
-        return null;
-    }
-
-    @Override
-    public double refueling(int litersToRefuel) {
-        return litersToRefuel * 0.95;
+    public void refuel(double liters) {
+        liters *= TANK_LEAKAGE_MULTIPLIER;
+        super.refuel(liters);
     }
 }
