@@ -15,7 +15,7 @@ public class Main {
 
         Vehicle truck = createVehicle(vehicleData);
 
-        Map<String, Vehicle> vehicles = new HashMap<>();
+        Map<String, Vehicle> vehicles = new LinkedHashMap<>();
         vehicles.put("Car", car);
         vehicles.put("Truck", truck);
 
