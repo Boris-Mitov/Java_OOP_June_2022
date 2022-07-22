@@ -1,29 +1,24 @@
 package PolymorphismExercise.Vehicles;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        List<Vehicle> vehicles = new ArrayList<>();
 
-        String[] carData = scanner.nextLine().split(" ");
+        String[] vehicleData = scanner.nextLine().split(" ");
 
-        double carFuelQuantity = Double.parseDouble(carData[1]);
-        double carFuelConsumption = Double.parseDouble(carData[2]);
+        Vehicle car = createVehicle(vehicleData);
 
-        Vehicle car = new Car(carFuelQuantity, carFuelConsumption);
-        vehicles.add(car);
-        String[] truckData = scanner.nextLine().split(" ");
+        vehicleData = scanner.nextLine().split(" ");
 
-        double truckFuelQuantity = Double.parseDouble(truckData[1]);
-        double truckFuelConsumption = Double.parseDouble(truckData[2]);
+        Vehicle truck = createVehicle(vehicleData);
 
-        Vehicle truck = new Truck(truckFuelQuantity, truckFuelConsumption);
-        vehicles.add(truck);
+        Map<String, Vehicle> vehicles = new HashMap<>();
+        vehicles.put("Car", car);
+        vehicles.put("Truck", truck);
+
         int n = Integer.parseInt(scanner.nextLine());
 
         for (int i = 0; i < n; i++) {
@@ -31,29 +26,37 @@ public class Main {
 
             String command = commandData[0];
             String vehicleType = commandData[1];
-            double value = Double.parseDouble(commandData[2]);
 
             switch (command) {
                 case "Drive":
-                    if (vehicleType.equals("Car")) {
-                        System.out.println(car.drive(value));;
-                    } else if (vehicleType.equals("Truck")) {
-                        System.out.println(truck.drive(value));;
-                    }
+                    double distance = Double.parseDouble(commandData[2]);
+                    String driveMessage = vehicles.get(vehicleType).drive(distance);
+                    System.out.println(driveMessage);
                 break;
                 case "Refuel":
-                    if (vehicleType.equals("Car")) {
-                        car.refuel(value);
-                    } else if (vehicleType.equals("Truck")) {
-                        truck.refuel(value);
-                    }
+                    double fuelAmount = Double.parseDouble(commandData[2]);
+                    vehicles.get(vehicleType).refuel(fuelAmount);
                     break;
             }
         }
 
-        for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle);
-        }
+        vehicles.values().forEach(System.out::println);
 
+    }
+    private static  Vehicle createVehicle(String[] vehicleData) {
+        String vehicleType = vehicleData[0];
+        double fuelQuantity = Double.parseDouble(vehicleData[1]);
+        double fuelConsumption = Double.parseDouble(vehicleData[2]);
+        Vehicle vehicle = null;
+
+        switch (vehicleType) {
+            case "Car":
+                vehicle = new Car(fuelQuantity, fuelConsumption);
+                break;
+            case "Truck":
+                vehicle = new Truck(fuelQuantity, fuelConsumption);
+                break;
+        }
+        return vehicle;
     }
 }
