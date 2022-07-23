@@ -1,6 +1,5 @@
-package solid;
+package solidLab;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class PasswordHasher {
