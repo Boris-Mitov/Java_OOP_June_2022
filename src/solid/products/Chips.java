@@ -1,17 +1,11 @@
 package solid.products;
 
-public class Chips implements Product{
+public class Chips extends Food implements Product{
 
     public static final double CALORIES_PER_100_GRAMS = 529.0;
 
-    private final double grams;
-
     public Chips(double grams) {
-        this.grams = grams;
-    }
-
-    public double getGrams() {
-        return this.grams;
+        super(grams);
     }
 
     @Override
@@ -19,5 +13,6 @@ public class Chips implements Product{
         double overallCalories = (CALORIES_PER_100_GRAMS / 100 ) * this.getGrams();
         return overallCalories;
     }
+
 }
 
