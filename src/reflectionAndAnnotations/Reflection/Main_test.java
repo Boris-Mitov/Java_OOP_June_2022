@@ -1,8 +1,8 @@
-package reflectionAndAnnotations;
+package reflectionAndAnnotations.Reflection;
 
 import java.lang.reflect.Method;
 
-public class Main {
+public class Main_test {
     public static void main(String[] args) throws ClassNotFoundException{
         Class clazz = Class.forName("reflectionAndAnnotations.Reflection");
 

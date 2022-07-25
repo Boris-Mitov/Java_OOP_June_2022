@@ -1,4 +1,4 @@
-package reflectionAndAnnotations;
+package reflectionAndAnnotations.GettersAndSetters;
 
 import java.io.Serializable;
 
