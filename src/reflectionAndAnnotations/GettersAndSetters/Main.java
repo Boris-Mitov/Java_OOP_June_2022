@@ -18,6 +18,10 @@ public class Main {
 
         Method[] methods = clazz.getDeclaredMethods();
 
+//        int modifiers = methods[0].getModifiers();
+
+
+
         TreeSet<Method> getters =filterMethodBy(methods, "get");
 
         TreeSet<Method> setters = filterMethodBy(methods, "set");
