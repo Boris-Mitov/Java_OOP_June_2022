@@ -1,4 +1,4 @@
-package barracksWars.interfaces;
+package reflectionAndAnnotationExercise.barracksWars.interfaces;
 
 public interface CommandInterpreter {
 

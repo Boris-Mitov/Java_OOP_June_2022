@@ -1,7 +1,7 @@
-package barracksWars.data;
+package reflectionAndAnnotationExercise.barracksWars.data;
 
-import barracksWars.interfaces.Repository;
-import barracksWars.interfaces.Unit;
+import reflectionAndAnnotationExercise.barracksWars.interfaces.Repository;
+import reflectionAndAnnotationExercise.barracksWars.interfaces.Unit;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.util.Map;

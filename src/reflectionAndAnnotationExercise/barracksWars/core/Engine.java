@@ -1,14 +1,13 @@
-package barracksWars.core;
+package reflectionAndAnnotationExercise.barracksWars.core;
 
-import barracksWars.interfaces.Repository;
-import barracksWars.interfaces.Runnable;
-import barracksWars.interfaces.Unit;
-import barracksWars.interfaces.UnitFactory;
+import reflectionAndAnnotationExercise.barracksWars.interfaces.Repository;
+import reflectionAndAnnotationExercise.barracksWars.interfaces.Runnable;
+import reflectionAndAnnotationExercise.barracksWars.interfaces.Unit;
+import reflectionAndAnnotationExercise.barracksWars.interfaces.UnitFactory;
 import jdk.jshell.spi.ExecutionControl;
 
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 
