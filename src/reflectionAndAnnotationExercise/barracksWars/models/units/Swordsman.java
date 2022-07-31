@@ -1,4 +1,4 @@
-package reflectionAndAnnotationExercise.barracksWars.models.units;
+package barracksWars.models.units;
 
 public class Swordsman extends AbstractUnit {
     private static final int SWORDSMAN_HEALTH = 40;
@@ -8,3 +8,5 @@ public class Swordsman extends AbstractUnit {
         super(SWORDSMAN_HEALTH, SWORDSMAN_DAMAGE);
     }
 }
+
+

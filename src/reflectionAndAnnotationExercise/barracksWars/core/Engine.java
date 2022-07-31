@@ -1,87 +1,49 @@
-package reflectionAndAnnotationExercise.barracksWars.core;
+package barracksWars.core;
 
-import reflectionAndAnnotationExercise.barracksWars.interfaces.Repository;
-import reflectionAndAnnotationExercise.barracksWars.interfaces.Runnable;
-import reflectionAndAnnotationExercise.barracksWars.interfaces.Unit;
-import reflectionAndAnnotationExercise.barracksWars.interfaces.UnitFactory;
-import jdk.jshell.spi.ExecutionControl;
-
+import barracksWars.interfaces.CommandInterpreter;
+import barracksWars.interfaces.Executable;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 
 public class Engine implements Runnable {
 
-	private final Repository repository;
-	private final UnitFactory unitFactory;
+    private final CommandInterpreter commandInterpreter;
 
-	public Engine(Repository repository, UnitFactory unitFactory) {
-		this.repository = repository;
-		this.unitFactory = unitFactory;
-	}
+    public Engine(CommandInterpreter commandInterpreter) {
+        this.commandInterpreter = commandInterpreter;
+    }
 
-	@Override
-	public void run() {
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(System.in));
-		while (true) {
-			try {
-				String input = reader.readLine();
-				String[] data = input.split("\\s+");
-				String commandName = data[0];
-				String result = interpretCommand(data, commandName);
-				if (result.equals("fight")) {
-					break;
-				}
-				System.out.println(result);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-	}
+    @Override
+    public void run() {
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-	// TODO: refactor for problem 4
-	private String interpretCommand(String[] data, String commandName) throws ExecutionControl.NotImplementedException,
-			ClassNotFoundException,
-			InvocationTargetException,
-			NoSuchMethodException,
-			InstantiationException,
-			IllegalAccessException {
-		String result;
-		switch (commandName) {
-			case "add":
-				result = this.addUnitCommand(data);
-				break;
-			case "report":
-				result = this.reportCommand(data);
-				break;
-			case "fight":
-				result = this.fightCommand(data);
-				break;
-			default:
-				throw new RuntimeException("Invalid command!");
-		}
-		return result;
-	}
+        while (true) {
+            try {
+                final String input = reader.readLine();
 
-	private String reportCommand(String[] data) {
-		return this.repository.getStatistics();
-	}
+                final String[] data = input.split("\\s+");
 
-	private String addUnitCommand(String[] data) throws ExecutionControl.NotImplementedException,
-			ClassNotFoundException,
-			InvocationTargetException,
-			NoSuchMethodException,
-			InstantiationException,
-			IllegalAccessException {
-		String unitType = data[1];
-		Unit unitToAdd = this.unitFactory.createUnit(unitType);
-		this.repository.addUnit(unitToAdd);
-		return unitType + " added!";
-	}
-	
-	private String fightCommand(String[] data) {
-		return "fight";
-	}
+                final Executable executable = this.commandInterpreter.interpretCommand(data);
+
+                final String result = executable.execute();
+
+                if (result.equals("fight")) {
+                    break;
+                }
+
+                System.out.println(result);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

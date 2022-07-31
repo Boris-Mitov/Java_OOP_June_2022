@@ -1,4 +1,4 @@
-package reflectionAndAnnotationExercise.barracksWars.interfaces;
+package barracksWars.interfaces;
 
 import jdk.jshell.spi.ExecutionControl;
 
